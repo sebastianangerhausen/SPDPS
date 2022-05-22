@@ -40,16 +40,13 @@ function solve_EEDC(stg::Settings)
     function prox_TG(u::Array{Float64}, T::Array{Float64})
         return [max(min(u[i]/(1 + α*T[i]), u_b), u_a) for i = 1:stg.N]
     end
-    if stg.risk_neutral
-        prox_CVaR⃰(v, ζ_proj) = (1/stg.S*ones(stg.S), ζ_proj)
-    else
-        function prox_CVaR⃰(v::Array{Float64}, ζ_proj=NaN)
-            if stg.S == 1 # Used only for deterministic control.
-                return [1], ζ_proj
-            else
-                fval, ζval = project(v, 1.0, p, stg.S, ζ_proj)
-                return fval, ζval
-            end
+    function prox_CVaR⃰(v::Array{Float64}, ζ_proj=NaN)
+        if stg.S == 1 # Deterministic control
+            return [1], ζ_proj
+        elseif stg.risk_neutral # Risk-neutral control
+            return 1/stg.S*ones(stg.S), ζ_proj
+        else
+            return project(v, 1.0, p, stg.S, ζ_proj)
         end
     end
 
