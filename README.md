@@ -1,6 +1,6 @@
 # SPDPS
 
-`SPDPS` is a [Julia](https://julialang.org/) project providing the code for the PhD thesis "A Stochastic Primal-Dual Proximal Splitting Method for Risk-Averse Optimal Control of PDEs" by Sebastian Angerhausen, submitted to the Faculty of Mathematics, University of Duisburg-Essen, in 2022.
+`SPDPS` is a [Julia](https://julialang.org/) project providing the code for the PhD thesis "A Stochastic Primal-Dual Proximal Splitting Method for Risk-Averse Optimal Control of PDEs" by Sebastian Angerhausen, submitted in 2022 to the Faculty of Mathematics, University of Duisburg-Essen.
 
 ## Usage
 
@@ -10,9 +10,10 @@ In order to use the project, you can follow the steps explained [here](https://p
 - enter the package manager by pressing `]`,
 - activate the project by executing the command `activate .`,
 - for the first time use: instantiate the project by executing the command `instantiate`,
+- exit the package manager by pressing backspace,
 - load the project by executing `using SPDPS`.
 
-Note that, in order to use the plotting features, you need to have Python installed together with the library `matplotlib`. For further instructions, see the installation instructions of [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl#installation).
+Note that, in order to use the plotting features, you need to have Python installed together with the library `matplotlib`. For further help, see the installation instructions of [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl#installation).
 
 You can then solve one of the two exemplary problems presented in the aforementioned PhD thesis by executing
 
