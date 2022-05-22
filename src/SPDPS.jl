@@ -10,6 +10,8 @@ module SPDPS
 using DataFrames, LinearAlgebra, SparseArrays, SuiteSparse, Random, Printf
 import Statistics, CSV, Distributions, PyPlot, StatsBase
 
+export run_test
+
 "Structure holding the settings for the algorithm"
 struct Settings
     prob::String        # Name of the problem ("EEDC" or "SBE")
@@ -39,7 +41,7 @@ include("./SimplexProj.jl")
 include("./Output.jl")
 
 """
-    run_test(prob::String; N::Union{Int64,Array{Int64}}=256,
+    run_test(prob::String="EEDC"; N::Union{Int64,Array{Int64}}=256,
              S::Union{Int64,Array{Int64}}=100, β::Union{Float64,Array{Float64}}=0.9,                    risk_neutral::Bool=false, tol::Union{Float64,Array{Float64}}=1e-6,
              step_size::String="constant", σ::Float64=0.1, γ::Float64=0.0,
              it_acc::Int64=Int(1e4), CGF_rule::Int64=0,
@@ -55,8 +57,8 @@ combination of parameters (if `N`, `S`, `β`, `tol`, or `q` are provided as arra
 - `prob`: name of the problem, either "EEDC" or "SBE"
 - `N`: number of grid points
 - `S`: number of scenarios
-- `risk_neutral`: Determines whether to compute a risk-neutral control or not
 - `β`: probability level of CVaR
+- `risk_neutral`: determines whether to compute a risk-neutral control or not
 - `tol`: tolerance for the stopping criterion
 - `step_size`: step size rule (either "constant", "acc" for acceleration, or "ssa"
                for step size adaptation)
@@ -74,10 +76,10 @@ combination of parameters (if `N`, `S`, `β`, `tol`, or `q` are provided as arra
 - `tol_newton`: tolerance for Newton's method (only for SBE)
 - `maxit_newton`: maximum number of iterations for Newton's method (only for SBE)
 """
-function run_test(prob::String; N::Union{Int64,Array{Int64}}=256,
-                  S::Union{Int64,Array{Int64}}=100, β::Union{Float64,Array{Float64}}=0.9,
+function run_test(prob::String="EEDC"; N::Union{Int64,Array{Int64}}=256,
+                  S::Union{Int64,Array{Int64}}=1000, β::Union{Float64,Array{Float64}}=0.9,
                   risk_neutral::Bool=false, tol::Union{Float64,Array{Float64}}=1e-6,
-                  step_size::String="constant", σ::Float64=0.1, γ::Float64=0.0,
+                  step_size::String="constant", σ::Float64=0.01, γ::Float64=0.0,
                   it_acc::Int64=Int(1e4), CGF_rule::Int64=0,
                   q::Union{Float64,Array{Float64}}=1.0, use_Bk::Bool=false,
                   maxit::Int64=Int(1e9), it_out::Int64=Int(1e2), plot::Bool=false,
