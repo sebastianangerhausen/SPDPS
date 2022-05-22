@@ -109,8 +109,9 @@ function run_test(prob::String="EEDC"; N::Union{Int64,Array{Int64}}=256,
                         mkpath(path)
 
                         # Create settings structure.
-                        stg = Settings(prob, N, S, β, tol, step_size, σ, γ, it_acc,
-                                       CGF_rule, q, use_Bk, maxit, it_out, plot, csv, path)
+                        stg = Settings(prob, N, S, β, risk_neutral, tol, step_size, σ, γ,
+                                       it_acc, CGF_rule, q, use_Bk, maxit, it_out, plot,
+                                       csv, path)
 
                         # Print to console.
                         cgf_str = CGF_rule == 0 ? ", without CGF\n" : ", q=$q\n"
