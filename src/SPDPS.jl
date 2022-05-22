@@ -42,7 +42,8 @@ include("./Output.jl")
 
 """
     run_test(prob::String="EEDC"; N::Union{Int64,Array{Int64}}=256,
-             S::Union{Int64,Array{Int64}}=100, β::Union{Float64,Array{Float64}}=0.9,                    risk_neutral::Bool=false, tol::Union{Float64,Array{Float64}}=1e-6,
+             S::Union{Int64,Array{Int64}}=100, β::Union{Float64,Array{Float64}}=0.9,
+             risk_neutral::Bool=false, tol::Union{Float64,Array{Float64}}=1e-6,
              step_size::String="constant", σ::Float64=0.1, γ::Float64=0.0,
              it_acc::Int64=Int(1e4), CGF_rule::Int64=0,
              q::Union{Float64,Array{Float64}}=1.0, use_Bk::Bool=false,
