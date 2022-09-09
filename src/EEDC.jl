@@ -62,8 +62,12 @@ function solve_EEDC(stg::Settings)
     function K(yu, A=1:stg.S) # K(yu)[j] = J(y(ξʲ,⋅;u)) = K(u)ⱼ
         sol = Array{Float64}(undef, length(A))
         for (j, k) in enumerate(A)
-            sol[j] = 1/4*(scenarios[k].fem.Δx[1] + scenarios[k].fem.Δx[stg.N + 1] +
-                          scenarios[k].Δxs'*(yu[:,k] .- 1).^2)
+            s(i) = scenarios[k].fem.Δx[i]*((yu[i,k] .- 1).^2 +
+                                           (yu[i,k] .- 1)*(yu[i-1,k] .- 1) +
+                                           (yu[i-1,k] .- 1).^2)
+            sol[j] = 1/6*(scenarios[k].fem.Δx[1]*((yu[1,k] .- 1).^2 - yu[1,k] .+ 2) +
+                          scenarios[k].fem.Δx[end]*((yu[end,k] .- 1).^2 - yu[end,k] .+ 2) +
+                          sum(s, 2:stg.N))
         end
         return sol
     end
@@ -71,8 +75,11 @@ function solve_EEDC(stg::Settings)
     function K′⃰(yu, A=1:stg.S) # K′⃰(yu) = K′(u)⃰
         sol = Array{Float64}(undef, stg.N, length(A))
         for (j, k) in enumerate(A)
-            sol[:, j] = 1/2*reshape(scenarios[k].fem.M*(scenarios[k].fem.D\(
-                                    scenarios[k].Δxs.*(yu[:,k] .- 1))), stg.N, 1)
+            Xₖ = (vcat([scenarios[k].fem.Δx[1]*(2*yu[1,k] .- 3)],
+                        scenarios[k].fem.Δx[2:end-1].*(2*yu[2:end,k] .+ yu[1:end-1,k] .- 3)) +
+                  vcat(scenarios[k].fem.Δx[2:end-1].*(2*yu[1:end-1,k] .+ yu[2:end,k] .- 3),
+                       [scenarios[k].fem.Δx[end]*(2*yu[end,k] .- 3)]))./6
+            sol[:, j] = reshape(scenarios[k].fem.M*(scenarios[k].fem.D\Xₖ), stg.N, 1)
         end
         return sol
     end
@@ -85,7 +92,9 @@ function solve_EEDC(stg::Settings)
         return (m - stg.β*stg.S)/((1 - stg.β)*stg.S)*VaR +
                 sum(z_sorted[m+1:stg.S])/((1 - stg.β)*stg.S)
     end
-    G(u) = α/4*scenarios[1].Δxs'*u.^2
+    G(u) = α/6*(scenarios[1].fem.Δx[1]*u[1]^2 + scenarios[1].fem.Δx[end]*u[end]^2 +
+                sum(scenarios[1].fem.Δx[2:end-1].*
+                        (u[2:end].^2 + u[2:end].*u[1:end-1] + u[1:end-1].^2)))
     F(u) = CVaR(K(y(u))) + G(u)
 
     ## Solve the problem.
