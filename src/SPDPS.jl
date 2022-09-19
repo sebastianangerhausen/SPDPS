@@ -61,8 +61,7 @@ combination of parameters (if `N`, `S`, `β`, `tol`, or `q` are provided as arra
 - `β`: probability level of CVaR
 - `risk_neutral`: determines whether to compute a risk-neutral control or not
 - `tol`: tolerance for the stopping criterion
-- `step_size`: step size rule (either "constant", "acc" for acceleration, or "ssa"
-               for step size adaptation)
+- `step_size`: step size rule (either "constant" or "acc" for acceleration)
 - `σ`: initial dual step size
 - `γ`: acceleration parameter
 - `it_acc`: number of iterations with acceleration

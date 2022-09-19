@@ -30,7 +30,7 @@ for the steady Burgers’ equation (see Section 6.4). The method `run_test` more
 - `β`: probability level of CVaR
 - `risk_neutral`: determines whether to compute a risk-neutral control or not
 - `tol`: tolerance for the stopping criterion
-- `step_size`: step size rule (either "constant", "acc" for acceleration, or "ssa" for step size adaptation)
+- `step_size`: step size rule (either "constant" or "acc" for acceleration)
 - `σ`: initial dual step size
 - `γ`: acceleration parameter
 - `it_acc`: number of iterations with acceleration

@@ -192,21 +192,7 @@ Computes the step size vectors `T` and `Σ` in dependence of the matrix `M`.
 function set_step_size!(T::Array{Float64}, Σ::Array{Float64}, M::Array{Float64}, k::Int64,
                         stg::Settings)
 
-    if stg.step_size == "ssa"
-        # Step size operators analogously to [PC11]
-        T_new, Σ_new = similar(T), similar(Σ)
-        α = 1
-        for i = 1:stg.N
-            for j = 1:stg.S
-                a = abs(M[i, j])
-                T_new[i] = j == 1 ? a^(2 - α) : T_new[i] + a^(2 - α)
-                Σ_new[j] = i == 1 ? a^α : Σ_new[j] + a^α
-            end
-        end
-        T[:] = 1 ./ T_new
-        Σ[:] = 1 ./ Σ_new
-
-    elseif stg.step_size == "acc"
+    if stg.step_size == "acc"
         # Scalar step sizes with acceleration
         if k < stg.it_acc
             T[:] = fill(T[1]/(1 + 2*stg.γ*T[1]), stg.N)
