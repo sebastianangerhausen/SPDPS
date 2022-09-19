@@ -89,7 +89,7 @@ function solve_SBE(stg::Settings, tol_newton::Float64, maxit_newton::Int64)
         return (m - stg.β*stg.S)/((1 - stg.β)*stg.S)*VaR +
                 sum(z_sorted[m+1:stg.S])/((1 - stg.β)*stg.S)
     end
-    G(u) = α/4*2*Δx*sum(u.^2)
+    G(u) = α/2*Δx*sum(u.^2)
     F(u) = CVaR(K(y(u))) + G(u)
 
     ## Solve the problem.
