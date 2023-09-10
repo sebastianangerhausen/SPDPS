@@ -1,6 +1,6 @@
 # SPDPS
 
-`SPDPS` is a [Julia](https://julialang.org/) project providing the code for the PhD thesis "A Stochastic Primal-Dual Proximal Splitting Method for Risk-Averse Optimal Control of PDEs" by Sebastian Angerhausen, submitted in 2022 to the Faculty of Mathematics, University of Duisburg-Essen.
+`SPDPS` is a [Julia](https://julialang.org/) project providing the code for the PhD thesis [A Stochastic Primal-Dual Proximal Splitting Method for Risk-Averse Optimal Control of PDEs](https://doi.org/10.17185/duepublico/78165) by Sebastian Angerhausen, submitted in 2022 to the Faculty of Mathematics, University of Duisburg-Essen.
 
 ## Usage
 
